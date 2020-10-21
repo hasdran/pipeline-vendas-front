@@ -1,0 +1,17 @@
+@font-face {
+  font-family: OptimusPrinceps;
+  src: url('/fonts/Handel Gothic Italic Italic.tff');
+}
+
+body{
+  font-family: 'Handel Gothic Italic Italic';
+}
+.content{
+  margin-left: 0 ;
+  margin-right: 0 ;
+  padding: 15px;
+}
+.navbar-nav .dropdown-menu{
+  right: 0;
+  left: auto;
+}
