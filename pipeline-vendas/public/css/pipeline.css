@@ -1,0 +1,11 @@
+.input_lst{
+    border: 0;
+    background-color: transparent;
+    color: rgb(79, 79, 88);
+    position: relative;
+}
+.input_add{
+    display: inline-block;
+    width: 100%;
+    min-height: 60px;
+}

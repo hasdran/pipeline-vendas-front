@@ -11,26 +11,19 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
-Route::get('/', function () {
-    return view('pipeline');
-});
-Route::get('/oi', function ()
-{
-    
-$response = Http::get('http://test.com', function ()
-{
-    return 0;
-});
+Route::get('/', 'PipelineController@show');
+Route::get('/create', 'PipelineController@show');
+Route::post('/create', 'PipelineController@create');
+
+Route::get('/situacao', 'SituacaoController@show');
+Route::post('/situacao/create', 'SituacaoController@create');
+
+Route::get('/oi', function () {
+    $response = Http::withBasicAuth('admin', 'Aa123456*+')->get('localhost:3000');
+    echo $response; 
 });
 
-Route::get('/', function () {
-    return view('pipeline');
-});
-Route::get('/oi', function ()
-{
     
-$response = Http::get('http://test.com', function ()
-{
-    return 0;
-});
-});
+
+
+
