@@ -18,8 +18,7 @@ class SituacaoController extends Controller
     {   
 
         $situacao= $request->input('situacao');
-        echo $situacao;
-        // return view('situacao');
+
     }
 
     public static function find($id)
@@ -27,6 +26,10 @@ class SituacaoController extends Controller
         $situacao = Situacao::where('ID_SITUACAO', '=', $id)->get(); 
         return $situacao;
     }
-
+    public static function getAll()
+    {
+        $situacao = Situacao::all();
+        return $situacao;
+    }
     
 }

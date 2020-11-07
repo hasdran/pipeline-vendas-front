@@ -1,11 +1,81 @@
+table th{
+    font-size: 0.70em;
+}
+
+table th #th_cliente{
+    width: 100px;
+}
+
+table input{
+    font-size: 0.70em;
+}
+
+table td .cli{
+    max-width: 100px;
+}
+table td .prj{
+    max-width: 100px;
+}
+
+table td .val, .prz, .sit, .tmpo, .dur, .mud{
+    max-width: 51px;
+}
+table td .vol, .prob, .rec_est, .rec_esp, .impcto{
+    max-width: 70px;
+}
+table td .dt_ab, .dt_ini, .dt_enc {
+    max-width: 70px;
+}
+
 .input_lst{
     border: 0;
     background-color: transparent;
     color: rgb(79, 79, 88);
     position: relative;
 }
-.input_add{
+
+.form-control{
     display: inline-block;
     width: 100%;
-    min-height: 60px;
+    height: 30px;
+}
+ #teste{
+    font-size: 0.70em;
+    padding: 6px;
+ }
+
+.inpt_dt{
+    max-width: 130px;
+}
+.inpt_prz{
+    max-width: 70px;
+}
+
+.btn_primary{
+    border: 0;
+    border-radius: 3px;
+    color: white;
+    height: 2em;
+    background-color: rgb(14, 106, 255);
+    font-size: 0.80em;
+    border: transparent;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.btn_primary:hover{
+    background-color: rgb(14, 106, 225);    
+}
+
+.btn_secondary{
+    border: 0;
+    border-radius: 3px;
+    color: rgb(46, 46, 46);
+    height: 2em;
+    background-color: rgb(255, 255, 255);
+    font-size: 0.80em;
+    border-left: transparent;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.btn_secondary:hover{
+    background-color: rgba(155, 155, 155, 0.877);
+    
 }
