@@ -11,25 +11,69 @@ for (let lin = 1; lin <= qtdeLinhas; lin++) {
       this.style.border = '0em';
     });
   }
-  console.log(lin)
-
 }
+
 $(".inpt_prz").keyup(function () {
   let prazo = $(this).val();
-  let qtde = $(this).val();
-  let volume = $(this).val();
-  $(".inpt_time").val(prazo);
+  let valM3 = $(".inpt_val").val();
+  let volume = $(".inpt_vol").val();
   
-  prazo = parseInt(prazo);
+  const qtdeEst = calculaRecEst(prazo, valM3, volume);
+  const qtdeEsp = calculaRecEsp(qtdeEst);
+  insereRecEsp(qtdeEst);
+
+  $(".inpt_rec_est").val(qtdeEst);
+  $(".inpt_rec_esp").val(qtdeEsp);
 
   if (prazo >= 12) {
     $(".inpt_dur").val("Longo prazo");
   }else if (prazo < 12) {
     $(".inpt_dur").val("Curto prazo");
   }
-
-
 });
+
+
+$(".inpt_time").keyup(function () {
+  let valM3 = $(".inpt_val").val();
+  let volume = $(".inpt_vol").val();
+  let probabilidade = $(".inpt_prob").val();
+  let tempo = $(this).val();
+
+  $(".inpt_impacto").val(calculaImpacto(valM3, volume, probabilidade, tempo));
+});
+
+function calculaRecEst(prazo, valM3, volume) {
+  const val = parseFloat(valM3);
+  const prz = parseInt(prazo);
+  const vol = parseFloat(volume);
+  const qtdeEst = val * vol * prz;
+
+  return qtdeEst;
+}
+
+function calculaRecEsp(qtdeEst) {
+
+    let probabilidade = $(".inpt_prob").val();
+    probabilidade = parseInt(probabilidade);
+
+    return qtdeEst * (probabilidade/100); 
+}
+
+function calculaImpacto(valorM3, volume, probabilidade, tempo ) {
+  const val = parseFloat(valorM3);
+  const vol = parseFloat(volume);
+  const prob = parseInt(probabilidade);
+  const tmp = parseInt(tempo);
+
+  return val * vol * (prob/100) * tempo;
+}
+
+function insereRecEsp(qtdeEst) {
+      $(".inpt_prob").change(function () {
+  
+      $(".inpt_rec_esp").val(calculaRecEsp(qtdeEst));
+    });
+}
 
 $("#btn_add").click(function () {
   window.location.href = "./create"

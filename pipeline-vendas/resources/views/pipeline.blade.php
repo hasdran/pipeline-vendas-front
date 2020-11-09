@@ -31,28 +31,26 @@
  <table class="table-sm">
     <thead>
       <tr>
-        <th scope="col" id="th_cliente">Cliente</th>
-        <th scope="col" id="">Projeto</th>
-        <th scope="col" id="">Valor/m³</th>
-        <th scope="col" id="">Volume (m³/mês)</th>
-        <th scope="col" id="">Data Abertura</th>
-        <th scope="col" id="">Data Início Operação</th>
-        <th scope="col" id="">Prazo do Contrato</th>    
-        <th scope="col" id="">Probabilidade</th>
-        <th scope="col" id="">Situação</th>
-        <th scope="col" id="">Data Encerramento</th>
-        <th scope="col" id="">Tempo 2020 (meses)</th> 
-        <th scope="col" id="">Receita Estimada</th>    
-        <th scope="col" id="">Receita Esperada</th>
-        <th scope="col" id="">Impacto 2020</th>
-        <th scope="col" id="">Duração</th>
-        <th scope="col" id="">Mudança Status</th>                          
+        <th scope="col">Cliente</th>
+        <th scope="col">Projeto</th>
+        <th scope="col">Valor/m³</th>
+        <th scope="col">Volume (m³/mês)</th>
+        <th scope="col">Data Abertura</th>
+        <th scope="col">Data Início Operação</th>
+        <th scope="col">Prazo do Contrato</th>    
+        <th scope="col">Probabilidade</th>
+        <th scope="col">Situação</th>
+        <th scope="col">Data Encerramento</th>
+        <th scope="col">Tempo 2020 (meses)</th> 
+        <th scope="col">Receita Estimada</th>    
+        <th scope="col">Receita Esperada</th>
+        <th scope="col">Impacto 2020</th>
+        <th scope="col">Duração</th>
+        <th scope="col">Mudança Status</th>                          
       </tr>
     </thead>
     <tbody>
-    <!-- <tr>
-      <td></td>
-    </tr> -->
+
       @php
         $lin = 1;
       @endphp
@@ -81,20 +79,19 @@
         @endphp   
       @endforeach
           <input type="hidden" value="<?= $lin-1 ?>" id="qtdeLinhas">
-
       @if(isset($op) and $op == "create")
         <form id="pipeline_form"action="{{action('PipelineController@create')}}" method="post">
         @csrf
           <tr>            
             <td><input id="teste" class="form-control" type="text" name="cliente"></td>
             <td><input id="teste" class="form-control" type="text" name="projeto"></td>
-            <td><input id="teste" class="form-control" type="text" name="valor_m3"></td>
-            <td><input id="teste" class="form-control" type="text" name="volume_m3"></td>
+            <td><input id="teste" class="form-control inpt_val" type="text" name="valor_m3"></td>          
+            <td><input id="teste" class="form-control inpt_vol" type="text" name="volume_m3"></td>            
             <td><input id="teste" class="form-control inpt_dt" type="date" data-inputmask="'alias': 'date'" name="dt_abertura"></td>
             <td><input id="teste" class="form-control inpt_dt" type="date" name="dt_inicio_op"></td>
             <td><input id="teste" class="form-control inpt_prz" type="text" name="prazo_contrato"></td>
             <td>
-              <select class="form-control" id="teste" name="probabilidade">
+              <select class="form-control inpt_prob" id="teste" name="probabilidade">
                 <option value="10">10%</option>
                 <option value="30">30%</option>
                 <option value="50">50%</option>
@@ -111,13 +108,13 @@
                 @endforeach
               </select>              
             </td>
-            <td><input id="teste" class="form-control inpt_dt" type="date" name="dt_encerramento"></td>
-            <td><input id="teste" class="form-control inpt_time" type="text" name="tempo" disabled></td>
-            <td><input id="teste" class="form-control" type="text" name="receita_est" disabled></td>
-            <td><input id="teste" class="form-control" type="text" name="receita_esp" disabled></td>
-            <td><input id="teste" class="form-control" type="text" name="impacto"></td>
+            <td><input id="teste" class="form-control inpt_dt_enc" type="date" name="dt_encerramento"></td>
+            <td><input id="teste" class="form-control inpt_time" type="text" name="tempo"></td>
+            <td><input id="teste" class="form-control inpt_rec_est" type="text" name="receita_est" disabled></td>
+            <td><input id="teste" class="form-control inpt_rec_esp" type="text" name="receita_esp" disabled></td>
+            <td><input id="teste" class="form-control inpt_impacto" type="text" name="impacto" disabled></td>
             <td><input id="teste" class="form-control inpt_dur" type="text" name="duracao"></td>
-            <td><input id="teste" class="form-control inpt_dur" type="text" name="mudanca_sts"></td>
+            <td><input id="teste" class="form-control inpt_sts" type="text" name="mudanca_sts"></td>
           </tr>  
         </form>
       @endif

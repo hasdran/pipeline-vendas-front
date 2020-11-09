@@ -5,13 +5,15 @@
 
 body{
   font-family: 'Handel Gothic Italic Italic';
+  width: 0auto;
 }
 .content{
   margin-left: 0 ;
   margin-right: 0 ;
   padding: 15px;
-  
+  width: 100%;
 }
+
 .navbar-nav .dropdown-menu{
   right: 0;
   left: auto;
