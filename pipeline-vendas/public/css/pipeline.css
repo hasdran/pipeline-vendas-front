@@ -2,53 +2,45 @@ table th{
     font-size: 0.70em;
 }
 
-table th #th_cliente{
+table th{
     width: 100px;
 }
 
-table input{
-    font-size: 0.70em;
+.input-sm{
+    max-width: 80px;
 }
-
-table td .cli{
-    max-width: 100px;
-}
-table td .prj{
+.input-md{
     max-width: 100px;
 }
 
-table td .val, .prz, .sit, .tmpo, .dur, .mud{
-    max-width: 51px;
-}
-table td .vol, .prob, .rec_est, .rec_esp, .impcto{
-    max-width: 70px;
-}
-table td .dt_ab, .dt_ini, .dt_enc {
-    max-width: 70px;
+.input-lg{
+    max-width: 150px;
 }
 
 .input_lst{
     border: 0;
     background-color: transparent;
+    font-size: 0.70em;
     color: rgb(79, 79, 88);
     position: relative;
 }
 
-.form-control{
+.form-add{
     display: inline-block;
+    font-size: 0.70em;
     width: 100%;
     height: 30px;
 }
- #teste{
-    font-size: 0.70em;
-    padding: 6px;
- }
 
 .inpt_dt{
     max-width: 130px;
 }
 .inpt_prz{
     max-width: 70px;
+}
+
+#btn_cancel, #btn_add, #btn_save{
+    margin-top: 1em;
 }
 
 .btn_primary{

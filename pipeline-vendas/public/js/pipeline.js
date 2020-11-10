@@ -13,33 +13,33 @@ for (let lin = 1; lin <= qtdeLinhas; lin++) {
   }
 }
 
-$(".inpt_prz").keyup(function () {
+$("#inpt_prz").keyup(function () {
   let prazo = $(this).val();
-  let valM3 = $(".inpt_val").val();
-  let volume = $(".inpt_vol").val();
+  let valM3 = $("#inpt_val").val();
+  let volume = $("#inpt_vol").val();
   
   const qtdeEst = calculaRecEst(prazo, valM3, volume);
   const qtdeEsp = calculaRecEsp(qtdeEst);
   insereRecEsp(qtdeEst);
 
-  $(".inpt_rec_est").val(qtdeEst);
-  $(".inpt_rec_esp").val(qtdeEsp);
+  $("#inpt_rec_est").val(qtdeEst);
+  $("#inpt_rec_esp").val(qtdeEsp);
 
   if (prazo >= 12) {
-    $(".inpt_dur").val("Longo prazo");
+    $("#inpt_dur").val("Longo prazo");
   }else if (prazo < 12) {
-    $(".inpt_dur").val("Curto prazo");
+    $("#inpt_dur").val("Curto prazo");
   }
 });
 
 
-$(".inpt_time").keyup(function () {
-  let valM3 = $(".inpt_val").val();
-  let volume = $(".inpt_vol").val();
-  let probabilidade = $(".inpt_prob").val();
+$("#inpt_tempo").keyup(function () {
+  let valM3 = $("#inpt_val").val();
+  let volume = $("#inpt_vol").val();
+  let probabilidade = $("#inpt_prob").val();
   let tempo = $(this).val();
 
-  $(".inpt_impacto").val(calculaImpacto(valM3, volume, probabilidade, tempo));
+  $("#inpt_impacto").val(calculaImpacto(valM3, volume, probabilidade, tempo));
 });
 
 function calculaRecEst(prazo, valM3, volume) {
@@ -53,7 +53,7 @@ function calculaRecEst(prazo, valM3, volume) {
 
 function calculaRecEsp(qtdeEst) {
 
-    let probabilidade = $(".inpt_prob").val();
+    let probabilidade = $("#inpt_prob").val();
     probabilidade = parseInt(probabilidade);
 
     return qtdeEst * (probabilidade/100); 
@@ -65,13 +65,13 @@ function calculaImpacto(valorM3, volume, probabilidade, tempo ) {
   const prob = parseInt(probabilidade);
   const tmp = parseInt(tempo);
 
-  return val * vol * (prob/100) * tempo;
+  return val * vol * (prob/100) * tmp;
 }
 
 function insereRecEsp(qtdeEst) {
-      $(".inpt_prob").change(function () {
+      $("#inpt_prob").change(function () {
   
-      $(".inpt_rec_esp").val(calculaRecEsp(qtdeEst));
+      $("#inpt_rec_esp").val(calculaRecEsp(qtdeEst));
     });
 }
 
