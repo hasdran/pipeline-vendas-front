@@ -24,8 +24,7 @@ nav span {
 }
 
 .menu {
-    flex-direction: row-reverse;
-    
+    flex-direction: row-reverse; 
 }
 
 .content {
@@ -83,6 +82,6 @@ table th{
     margin-top: 1em;
     font-size: 0.6em;
 }
-#btn_add{
-    width: 10%;
-}
+/* #btn_add{
+    width: 10em;
+} */

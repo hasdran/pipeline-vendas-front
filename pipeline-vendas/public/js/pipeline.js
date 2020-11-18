@@ -4,14 +4,15 @@ function getQtdeLinhasTable() {
 }
 
 for (let lin = 1; lin <= getQtdeLinhasTable(); lin++) {
-  for (let col = 1; col <= 16; col++) {    
-    $( `#inpt_lin${lin}_col${col}`)
-    .mouseover(function() {
-      this.style.border = '0.1em solid #c1c0c0';
-    })
-    .mouseout(function() {
-      this.style.border = '0em';
-    });
+  for (let col = 1; col <= 16; col++) {
+    $(`#inpt_lin${lin}_col${col}`)
+      .mouseover(function () {
+        this.style.border = '0.1em solid #c1c0c0';
+        $(`#inpt_lin${lin}_col${col}`).prepend("<h1>");
+      })
+      .mouseout(function () {
+        this.style.border = '0em';
+      });
   }
 }
 
@@ -19,7 +20,7 @@ $("#inpt_prz").keyup(function () {
   let prazo = $(this).val();
   let valM3 = $("#inpt_val").val();
   let volume = $("#inpt_vol").val();
-  
+
   const qtdeEst = calculaRecEst(prazo, valM3, volume);
   const qtdeEsp = calculaRecEsp(qtdeEst);
   insereRecEsp(qtdeEst);
@@ -29,7 +30,7 @@ $("#inpt_prz").keyup(function () {
 
   if (prazo >= 12) {
     $("#inpt_dur").val("Longo prazo");
-  }else if (prazo < 12) {
+  } else if (prazo < 12) {
     $("#inpt_dur").val("Curto prazo");
   }
 });
@@ -55,26 +56,26 @@ function calculaRecEst(prazo, valM3, volume) {
 
 function calculaRecEsp(qtdeEst) {
 
-    let probabilidade = $("#inpt_prob").val();
-    probabilidade = parseInt(probabilidade);
+  let probabilidade = $("#inpt_prob").val();
+  probabilidade = parseInt(probabilidade);
 
-    return qtdeEst * (probabilidade/100); 
+  return qtdeEst * (probabilidade / 100);
 }
 
-function calculaImpacto(valorM3, volume, probabilidade, tempo ) {
+function calculaImpacto(valorM3, volume, probabilidade, tempo) {
   const val = parseFloat(valorM3);
   const vol = parseFloat(volume);
   const prob = parseInt(probabilidade);
   const tmp = parseInt(tempo);
 
-  return val * vol * (prob/100) * tmp;
+  return val * vol * (prob / 100) * tmp;
 }
 
 function insereRecEsp(qtdeEst) {
-      $("#inpt_prob").change(function () {
-  
-      $("#inpt_rec_esp").val(calculaRecEsp(qtdeEst));
-    });
+  $("#inpt_prob").change(function () {
+
+    $("#inpt_rec_esp").val(calculaRecEsp(qtdeEst));
+  });
 }
 $("#btn_cancel").click(function () {
   window.location.href = "/"
@@ -85,40 +86,40 @@ $("#btn_add").click(function () {
 });
 
 $("#btn_save").click(function () {
-  $("#pipeline_form").submit();  
+  $("#pipeline_form").submit();
 });
 
 function corrigeData(data) {
   if (data[0].length == 2) {
     return `${data[2]}-${data[1]}-${data[0]}`.toString();
-  }else{
+  } else {
     return `${data[0]}-${data[1]}-${data[2]}`.toString();
-  }   
+  }
 }
 
 for (let index = 1; index <= getQtdeLinhasTable(); index++) {
-  $(`#inpt_lin${index}_col5`).focusin(()=>{
+  $(`#inpt_lin${index}_col5`).focusin(() => {
     var dateStr = $(`#inpt_lin${index}_col5`).val().split("-");
     $(`#inpt_lin${index}_col5`).val(`${dateStr[2]}-${dateStr[1]}-${dateStr[0]}`);
-    $(`#inpt_lin${index}_col5`).prop("type", "date");    
+    $(`#inpt_lin${index}_col5`).prop("type", "date");
   });
-  $(`#inpt_lin${index}_col5`).click(()=>{
+  $(`#inpt_lin${index}_col5`).click(() => {
     var dateStr = $(`#inpt_lin${index}_col5`).val().split("-");
     $(`#inpt_lin${index}_col5`).val(`${dateStr[2]}-${dateStr[1]}-${dateStr[0]}`);
-    $(`#inpt_lin${index}_col5`).prop("type", "date");    
+    $(`#inpt_lin${index}_col5`).prop("type", "date");
   });
 
-  $(`#inpt_lin${index}_col6`).click(()=>{
+  $(`#inpt_lin${index}_col6`).click(() => {
     var dateStr = $(`#inpt_lin${index}_col6`).val().split("-");
     $(`#inpt_lin${index}_col6`).val(`${dateStr[2]}-${dateStr[1]}-${dateStr[0]}`);
-    $(`#inpt_lin${index}_col6`).prop("type", "date");    
+    $(`#inpt_lin${index}_col6`).prop("type", "date");
   });
 
-  $( `#btn-remover-${index}`).click(()=>{
+  $(`#btn-remover-${index}`).click(() => {
     var token = $('[name="_token"]').val();
     var id = $(`#id_${index}`).val();
     $.ajax({
-      headers: {'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      headers: { 'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
       type: "POST",
       url: "/pipeline/delete",
       dataType: 'JSON',
@@ -126,10 +127,10 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
         "_token": token,
         "id": id,
       },
-      success: (result)=>{
+      success: (result) => {
         window.location.href = "/"
       },
-      error: (err)=>{
+      error: (err) => {
         window.location.href = "/?op=error"
       }
     });
@@ -142,7 +143,7 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
     var projeto = $(`#inpt_lin${index}_col2`).val();
     var valor_m3 = $(`#inpt_lin${index}_col3`).val()
     var volume_m3 = $(`#inpt_lin${index}_col4`).val();
-    var dt_abertura = $(`#inpt_lin${index}_col5`).val().split("-");        
+    var dt_abertura = $(`#inpt_lin${index}_col5`).val().split("-");
     var dt_inicio_op = $(`#inpt_lin${index}_col6`).val().split("-");
     var prazo_contrato = $(`#inpt_lin${index}_col7`).val();
     var probabilidade = $(`#inpt_lin${index}_col8`).val();
@@ -159,7 +160,7 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
     }
 
     $.ajax({
-      headers: {'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+      headers: { 'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
       type: "POST",
       url: "/update",
       dataType: 'JSON',
@@ -169,23 +170,23 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
         "cliente": cliente,
         "projeto": projeto,
         "valor_m3": valor_m3,
-        "volume_m3": volume_m3,      
+        "volume_m3": volume_m3,
         "dt_abertura": dt_abertura,
         "dt_inicio_op": dt_inicio_op.toString(),
         "prazo_contrato": prazo_contrato,
         "probabilidade": probabilidade,
         "situacao": situacao,
-        "dt_encerramento":`${dt_encerramento[2]}-${dt_encerramento[1]}-${dt_encerramento[0]}`.toString(),
+        "dt_encerramento": `${dt_encerramento[2]}-${dt_encerramento[1]}-${dt_encerramento[0]}`.toString(),
         "tempo": tempo,
         // "tempo": $(`#inpt_${index}_col11`).val(),
         "dtopeinc": "2020-12-01",
         "id_fechamento": "1",
         "mudanca_sts": "Ativa"
       },
-      success: (result)=>{
+      success: (result) => {
         window.location.href = "/?op=updated"
       },
-      error: (err)=>{
+      error: (err) => {
         console.log(err)
         window.location.href = "/?op=error"
       }
@@ -193,7 +194,7 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
   });
 }
 
-  
+
 
 
 

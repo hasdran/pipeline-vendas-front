@@ -158,13 +158,10 @@
         <div class="col-sm-2"><button id="btn_cancel" class="btn btn-warning btn-block bt-action" type="button"><a href="." class="text-decoration-none">Cancelar</a></button></div>
         <div class="col-sm-2"><button id="btn_save" class="btn btn-success btn-block bt-action"type="button">Salvar</button></div>        
       </div>
-    @elseif(isset($op) and $op == "update")  
-      <div class="row">
-        <div class="col-sm-2"><button id="btn_cancel" class="btn btn-warning btn-block bt-action" type="button"><a href="." class="text-decoration-none">Cancelar</a></button></div>
-        <div class="col-sm-2"><button id="btn_update" class="btn btn-success btn-block bt-action"type="button">Salvar</button></div>        
-      </div>
     @else
-      <button id="btn_add" class="btn btn-success bt-action" type="button">Inserir</button>    
+      <div class="row">
+        <div class="col-md-4"><button id="btn_add" class="btn btn-success bt-action" type="button">Inserir</button></div>                    
+      </div>
     @endif
   </div>  
 @endsection

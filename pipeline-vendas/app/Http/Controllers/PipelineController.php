@@ -57,70 +57,65 @@ class PipelineController extends Controller {
 
     public function create(Request $request) {
         $pipeline = new Pipeline();
-        if(isset($request->cliente)) {            
-            $pipeline->CLIENTE = $request->cliente;
-        }
-        if(isset($request->projeto)) {            
-            $pipeline->PROJETO = $request->projeto;
-        }
-        if(isset($request->valor_m3)) {            
-            $pipeline->VALOR = $request->valor_m3;
-        }        
-        if(isset($request->volume_m3)) {            
-            $pipeline->VOLUME = $request->volume_m3;
-        }    
-        if(isset($request->dt_abertura)) {
-            $pipeline->DT_ABERTURA = $request->dt_abertura;
-        }
-        if(isset($request->dt_abertura)) {
-            $pipeline->DT_ENCERRAMENTO = $request->dt_abertura;
-        }        
-        if(isset($request->dt_inicio_op)) {
-            $pipeline->DT_INICIO = $request->dt_inicio_op;
-        }        
-        if(isset($request->prazo_contrato)) {            
-            $pipeline->PRAZO = $request->prazo_contrato;
-        }              
-        if(isset($request->probabilidade)) {
-            $pipeline->PROBAB = $request->probabilidade;
-        }        
-        if(isset($request->situacao)) {
-            $pipeline->ID_SITUACAO = $request->situacao;
-        }          
-        if(isset($request->tempo)) {
-            $pipeline->TEMPO = $request->tempo;   
-        }     
-        if(isset($request->tempo)) {
-            $pipeline->DURACAO = ($request->prazo_contrato > 11) ? "Longo prazo" : "Curto prazo";
-        }
-        $pipeline->DTOPEINC = '2020-09-01';
+        if(isset($request->cliente)) {      
+            if(isset($request->projeto)) {   
+                if(isset($request->valor_m3)) {
+                    if(isset($request->volume_m3)) { 
+                        if(isset($request->dt_abertura)) {
+                            if(isset($request->dt_abertura)) {
+                                if(isset($request->dt_inicio_op)) {
+                                    if(isset($request->prazo_contrato)) {
+                                        if(isset($request->probabilidade)) {
+                                            if(isset($request->situacao)) {
+                                                if(isset($request->tempo)) {                                
+                                                    $pipeline->CLIENTE = $request->cliente;
+                                                    $pipeline->PROJETO = $request->projeto;
+                                                    $pipeline->VALOR = $request->valor_m3;
+                                                    $pipeline->VOLUME = $request->volume_m3;
+                                                    $pipeline->DT_ABERTURA = $request->dt_abertura;                                                 
+                                                    $pipeline->DT_INICIO = $request->dt_inicio_op;
+                                                    $pipeline->PRAZO = $request->prazo_contrato;
+                                                    $pipeline->PROBAB = $request->probabilidade;
+                                                    $pipeline->ID_SITUACAO = $request->situacao;
+                                                    $pipeline->TEMPO = $request->tempo;
 
-        $pipeline->ID_FECHAMENTO = 1;
-
-        $dt_atual = date('Y-m-d');
-        list($ano_atual, $mes_atual, $dia_atual) = explode("-", $dt_atual);
-        list($ano_dt_abertura, $mes_dt_abertura, $dia_dt_abertura) = explode("-", $pipeline->DT_ABERTURA);
-        list($ano_dt_encerr, $mes_dt_encerr, $dia_dt_encerr) = explode("-", $pipeline->DT_ENCERRAMENTO);
-
-        // if ($ano_dt_abertura == $ano_atual && $mes_dt_abertura == $mes_atual) {
-        //     $pipeline->MUDANCA_STS = "Nova";
-        // }
-        // else if($ano_dt_encerr == ano_atual && $mes_dt_encerr == $mes_atual){
-        //     $pipeline->MUDANCA_STS = "Nova";
-        // }
-        $situacao = SituacaoController::find($request->situacao);
-        echo $situacao[0]->SITUACAO;
-
+                                                    if (isset($request->dt_encerramento)) {
+                                                        $pipeline->DT_ENCERRAMENTO = $request->dt_encerramento;
+                                                    }
+                                                    
+                                                    $pipeline->DURACAO = ($request->prazo_contrato > 11) ? "Longo prazo" : "Curto prazo";                                                                                                                                                    
+                                                    $pipeline->ID_FECHAMENTO = 1;                                            
+                                                    $dt_atual = date('Y-m-d');
+                                                    $pipeline->DTOPEINC = $dt_atual;
+                                                    list($ano_atual, $mes_atual, $dia_atual) = explode("-", $dt_atual);                                                                                                             
+                                                    list($ano_dt_abertura, $mes_dt_abertura, $dia_dt_abertura) = explode("-", $pipeline->DT_ABERTURA);
+                                                    
+                                                    if ($ano_dt_abertura == $ano_atual && $mes_dt_abertura == $mes_atual) {
+                                                        $pipeline->MUDANCA_STS = "Nova";                                                        
+                                                    }else if(!isset($request->dt_encerramento)){
+                                                        $pipeline->MUDANCA_STS = "Ativa";                                                        
+                                                    }                                                            
+                                                }                     
+                                            }                  
+                                        }                                 
+                                    }                        
+                                }
+                            }                            
+                        }          
+                    }                                  
+                }                        
+            }      
+        }                       
         $op = "sucess";
+
         try {
-            // $pipeline->save();
+            $pipeline->save();
         } catch (\Throwable $th) {            
             $op = "error";
         }
-        // return $ano;
-        // return redirect()->action(
-        //     'PipelineController@show', ['op' => $op]
-        // );
+        return redirect()->action(
+            'PipelineController@show', ['op' => $op]
+        );
     }    
     public function delete(Request $request) {
         $op = "sucess";
@@ -130,6 +125,7 @@ class PipelineController extends Controller {
         } catch (\Throwable $th) {
             $op = "error";
             $code = 200;
+
         }
         return response()-> json([
             'status' => $op,
