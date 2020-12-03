@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Pipeline extends Model {
-  protected $table = 'PIPELINE';
+class PipelineFato extends Model {
+  protected $table = 'PIPELINE_FATO';
   public $timestamps = false;
 }

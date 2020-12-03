@@ -3,9 +3,17 @@
   src: url('/fonts/Handel Gothic Italic Italic.tff');
 }
 
+#icon_menu {
+  width: 50px;
+  height: 31px;
+  object-fit: cover;
+  object-position: left;
+}
+
 body{
   font-family: 'Handel Gothic Italic Italic';
   width: 0auto;
+  background-color: #10244f !important;
 }
 .content{
   margin-left: 0 ;
@@ -13,8 +21,22 @@ body{
   padding: 15px;
   width: 100%;
 }
-
+.nav-link, .navbar-brand{
+  color: white !important;
+  display: inline-block;
+}
 .navbar-nav .dropdown-menu{
   right: 0;
   left: auto;
+}
+nav span {
+  color: white !important;
+}
+
+.nav {
+  font-size: 10px !important;
+}
+
+.menu {
+  flex-direction: row-reverse;    
 }
