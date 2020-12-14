@@ -84,9 +84,14 @@ $("#btn_add").click(function () {
   window.location.href = "./create"
 });
 
+
+
 $("#btn_save").click(function () {
-  $("#pipeline_form").submit();  
+   $("#pipeline_form").submit();  
+
 });
+
+
 
 function corrigeData(data) {
   if (data[0].length == 2) {
@@ -174,7 +179,7 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
         "dt_inicio_op": dt_inicio_op.toString(),
         "prazo_contrato": prazo_contrato,
         "probabilidade": probabilidade,
-        "situacao": situacao,
+        "id_tab_situacao": situacao,
         "dt_encerramento":`${dt_encerramento[2]}-${dt_encerramento[1]}-${dt_encerramento[0]}`.toString(),
         "tempo": tempo,
         // "tempo": $(`#inpt_${index}_col11`).val(),
@@ -186,25 +191,12 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
         window.location.href = "/?op=updated"
       },
       error: (err)=>{
-        console.log(err)
+        console.log(err.responseText)
         window.location.href = "/?op=error"
       }
     });
   });
 }
-
-  
-
-
-
-
-
-
-
-
-
-
-
 
 // var input = document.getElementById("inpt_1");
 // // var btn = document.getElementById("btn");

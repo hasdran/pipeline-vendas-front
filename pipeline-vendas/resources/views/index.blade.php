@@ -47,7 +47,7 @@
           </a>
         </li>
 
-        <li class="nav-item" title="Formulário">
+        <!-- <li class="nav-item" title="Formulário">
           <a href="#" class="nav-link text-decoration-none">
             <h4>
               <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-earmark-text" fill="currentColor"
@@ -60,7 +60,7 @@
               </svg>
             </h4>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item" title="Fechamento">
           <a href="/fechamento" class="nav-link text-decoration-none">
             <h4>

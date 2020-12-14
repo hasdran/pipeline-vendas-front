@@ -2,6 +2,18 @@
   font-family: OptimusPrinceps;
   src: url('/fonts/Handel Gothic Italic Italic.tff');
 }
+ul {  
+  list-style-type: none;
+  padding: 0;
+}
+h5 {    
+  
+  font-size: 13pt !important;
+}
+h6 {    
+  font-size: 12pt !important;
+}
+
 
 #icon_menu {
   width: 50px;

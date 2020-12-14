@@ -14,11 +14,16 @@
 }
 
 table th{
-    font-size: 0.70em;
+    font-size: 0.80em;
 }
 
 table th{
     width: 100px;
+}
+
+tbody tr:hover{
+    background-color: #e1ecf4;
+  
 }
 
 .input-sm{
@@ -35,7 +40,7 @@ table th{
 .input_lst{
     border: 0;
     background-color: transparent;
-    font-size: 0.70em;
+    font-size: 0.80em;
     color: rgb(79, 79, 88);
     position: relative;
 }
@@ -58,6 +63,20 @@ table th{
     margin-top: 1em;
     font-size: 0.6em;
 }
-#btn_add{
-    width: 10%;
+#group-save {
+    display: flex;
+}
+
+
+.btn{
+    width: 0auto;
+    max-width: 100px;
+}
+@media(max-width: 805px){
+    #group-save {
+        display: block;
+    }
+    .btn{
+        width: 500px;
+    }
 }

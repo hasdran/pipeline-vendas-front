@@ -69,70 +69,70 @@
     @php
     $lin = 1;
     @endphp
+    @if(isset($pipeline))
     @foreach($pipeline as $result)
     <tr>
 
       @csrf
-      <td>
-        <!-- <form id="form-"action="{{action('PipelineController@delete')}}" method="post">  -->
-        <input id="id_<?= $lin?>" value="<?= $result->ID_PIPELINE ?>" type="hidden">
-        <input id='inpt_lin<?= $lin?>_col1' class="input_lst input-sm" type="text" value="<?= $result->CLIENTE ?>">
-      </td>
-      <td><input id='inpt_lin<?= $lin?>_col2' class="input_lst input-lg" type="text" value="<?= $result->PROJETO ?>">
-      </td>
-      <td><input id='inpt_lin<?= $lin?>_col3' class="val input_lst input-sm" type="text" value="<?= $result->VALOR ?> ">
-      </td>
-      <td><input id='inpt_lin<?= $lin?>_col4' class="vol input_lst input-sm" type="text" value="<?= $result->VOLUME ?>">
-      </td>
-      <td><input id='inpt_lin<?= $lin?>_col5' class="dt_ab input_lst input-lg" type="text"
-          value="<?= $result->DT_ABERTURA ?>" maxlength="10"></td>
-      <td><input id='inpt_lin<?= $lin?>_col6' class="dt_ini input_lst input-lg" type="text"
-          value="<?= $result->DT_INICIO ?>" maxlength="10"></td>
-      <td><input id='inpt_lin<?= $lin?>_col7' class="prz input_lst input-sm" type="text" value="<?= $result->PRAZO ?>">
-      </td>
-      <td><input id='inpt_lin<?= $lin?>_col8' class="prob input_lst input-md" type="text"
-          value="<?= $result->PROBAB ?>"></td>
-      <td>
-        <input id='situ_lin<?= $lin?>' type="hidden" value="<?= $result->ID_SITUACAO[0]->ID_SITUACAO?>">
-        <input id='inpt_lin<?= $lin?>_col9' class="sit input_lst input-sm" type="text"
-          value="<?= $result->ID_SITUACAO[0]->SITUACAO ?>">
-      </td>
-      <td><input id='inpt_lin<?= $lin?>_col10' class="dt_enc input_lst input-lg" type="text"
-          value="<?= $result->DT_ENCERR ?>" maxlength="10"></td>
-      <td><input id='inpt_lin<?= $lin?>_col11' class="tmpo input_lst input-sm" type="text"
-          value="<?= $result->TEMPO ?>"></td>
-      <td><input id='inpt_lin<?= $lin?>_col12' class="rec_est input_lst input-md" type="text"
-          value="<?= $result->REC_ESTIMADA ?>" disabled></td>
-      <td><input id='inpt_lin<?= $lin?>_col13' class="rec_esp input_lst input-md" type="text"
-          value="<?= $result->REC_ESPERADA ?>" disabled></td>
-      <td><input id='inpt_lin<?= $lin?>_col14' class="impcto input_lst input-md" type="text"
-          value="<?= $result->IMPACTO ?>" disabled></td>
-      <td><input id='inpt_lin<?= $lin?>_col15' class="dur input_lst input-sm  " type="text"
-          value="<?= $result->DURACAO ?>" disabled></td>
-      <td><input id='inpt_lin<?= $lin?>_col16' class="mud input_lst input-sm" type="text"
-          value="<?= $result->MUDANCA_STS ?>" disabled></td>
 
-      <td title="Editar">
-        <button id="btn-editar-<?= $lin?>" class="btn btn-default"><svg width="1em" height="1em" viewBox="0 0 16 16"
-            class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
-              d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-          </svg></button>
+      <td>
+        <input id="id_<?=$lin?>" value="<?=$result->ID_PIPELINE?>" type="hidden">
+        <input id='inpt_lin<?=$lin?>_col1' class="input_lst input-sm" type="text" value="<?=$result->CLIENTE?>">
       </td>
-      <td title="Excluir">
-        <button id="btn-remover-<?= $lin?>" class="btn btn-default" style="color: red"><svg width="1em" height="1em"
+      <td><input id='inpt_lin<?=$lin?>_col2' class="input_lst input-lg" type="text" value="<?=$result->PROJETO?>">
+      </td>
+      <td><input id='inpt_lin<?=$lin?>_col3' class="val input_lst input-sm" type="text" value="<?=$result->VALOR?> ">
+      </td>
+      <td><input id='inpt_lin<?=$lin?>_col4' class="vol input_lst input-sm" type="text" value="<?=$result->VOLUME?>">
+      </td>
+      <td><input id='inpt_lin<?=$lin?>_col5' class="dt_ab input_lst input-lg" type="text"
+          value="<?=$result->DT_ABERTURA?>" maxlength="10"></td>
+      <td><input id='inpt_lin<?=$lin?>_col6' class="dt_ini input_lst input-lg" type="text"
+          value="<?=$result->DT_INICIO?>" maxlength="10"></td>
+      <td><input id='inpt_lin<?=$lin?>_col7' class="prz input_lst input-sm" type="text" value="<?=$result->PRAZO?>">
+      </td>
+      <td><input id='inpt_lin<?=$lin?>_col8' class="prob input_lst input-md" type="text"
+          value="<?=$result->PROBAB?>"></td>
+      <td>
+        <input id='situ_lin<?=$lin?>' type="hidden" value="<?=$result->ID_TAB_SITUACAO[0]->ID_TAB_SITUACAO?>">
+        <input id='inpt_lin<?=$lin?>_col9' class="sit input_lst input-sm" type="text"
+          value="<?=$result->ID_TAB_SITUACAO[0]->SITUACAO?>">
+      </td>
+      <td><input id='inpt_lin<?=$lin?>_col10' class="dt_enc input_lst input-lg" type="text"
+          value="<?=$result->DT_ENCERR?>" maxlength="10"></td>
+      <td><input id='inpt_lin<?=$lin?>_col11' class="tmpo input_lst input-sm" type="text"
+          value="<?=$result->TEMPO?>"></td>
+      <td><input id='inpt_lin<?=$lin?>_col12' class="rec_est input_lst input-md" type="text"
+          value="<?=$result->REC_ESTIMADA?>" disabled></td>
+      <td><input id='inpt_lin<?=$lin?>_col13' class="rec_esp input_lst input-md" type="text"
+          value="<?=$result->REC_ESPERADA?>" disabled></td>
+      <td><input id='inpt_lin<?=$lin?>_col14' class="impcto input_lst input-md" type="text"
+          value="<?=$result->IMPACTO?>" disabled></td>
+      <td><input id='inpt_lin<?=$lin?>_col15' class="dur input_lst input-sm  " type="text"
+          value="<?=$result->DURACAO?>" disabled></td>
+      <td><input id='inpt_lin<?=$lin?>_col16' class="mud input_lst input-sm" type="text"
+          value="<?=$result->MUDANCA_STS?>" disabled></td>
+          <td title="Excluir">
+        <button id="btn-remover-<?=$lin?>" class="btn btn-default" style="color: red"><svg width="1em" height="1em"
             viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
               d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
           </svg></button>
       </td>
-
+      <td title="Editar">
+        <button id="btn-editar-<?=$lin?>" class="btn btn-default"><svg width="1em" height="1em" viewBox="0 0 16 16"
+            class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+          </svg></button>
+      </td>
     </tr>
     @php
     $lin++;
     @endphp
     @endforeach
-    <input type="hidden" value="<?= $lin-1 ?>" id="qtdeLinhas">
+    @endif
+    <input type="hidden" value="<?=$lin - 1?>" id="qtdeLinhas">
     @if(isset($op) and $op == "create")
     <form id="pipeline_form" action="{{action('PipelineController@create')}}" method="post">
       @csrf
@@ -154,10 +154,9 @@
           </select>
         </td>
         <td>
-          <!-- <input class="form-control" type="text" name="situacao"> -->
-          <select class="form-add input-sm" name="situacao">
+          <select class="form-add input-sm" name="id_tab_situacao">
             @foreach($situacoes_lst as $result)
-            <option value="<?= $result->ID_SITUACAO ?>"><?= $result->SITUACAO ?></option>
+            <option value="<?=$result->ID_TAB_SITUACAO?>"><?=$result->SITUACAO?></option>
             @endforeach
           </select>
         </td>
@@ -180,7 +179,7 @@
     <div class="col-sm-2"><button id="btn_cancel" class="btn btn-warning btn-block bt-action" type="button"><a href="."
           class="text-decoration-none">Cancelar</a></button></div>
     <div class="col-sm-2"><button id="btn_save" class="btn btn-success btn-block bt-action"
-        type="button">Salvar</button></div>
+        type="submit">Salvar</button></div>
   </div>
   @elseif(isset($op) and $op == "update")
   <div class="row">
