@@ -1,14 +1,3 @@
-// let cliente = "";
-// let projeto = "";
-// let valor = "";
-// let volume = "";
-// let dtAbertura = "";
-// let dtEncerramento = "";
-// let dtInicio = "";
-// let prazo = "";
-// let probab = "";
-// let idSituacao = "";
-// let tempo = "";
 
 function getQtdeLinhasTable() {
   return $("#qtdeLinhas").val();
@@ -171,7 +160,7 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
         "id_tab_situacao": idTabSituacao,
         "dt_encerramento": `${dtEncerramento[2]}-${dtEncerramento[1]}-${dtEncerramento[0]}`.toString(),
         "tempo": tempo,
-        "dtopeinc": "2020-12-01",
+        "dtopeinc": "2020-12-01",      
         "mudanca_sts": "Ativa",
         "mudanca_sts": 0
       },
@@ -187,8 +176,7 @@ for (let index = 1; index <= getQtdeLinhasTable(); index++) {
   });
 }
 
-$("#btn_add").click(() => loadFormAdd());
-$("#btn_save").click(() => savePipeline());
+$("#btn_add").click(() => loadFormAdd);
 /*****
  * Carrega dentro da tabela pipeline, o formulário de inserção
  */
@@ -209,33 +197,14 @@ function loadFormAdd() {
         situacoes += `<option value="${elemento.ID_TAB_SITUACAO}">${elemento.SITUACAO}</option>`;
       });
       $("#row-add-pipeline").remove();
-
-      $("#form-add-pipeline").prepend(
-        `
-        <tr id="row-add-pipeline">
-          <td>        
-            <button id="btn_cancel" class="btn btn-default btn-remover" type="button" title="Limpar Dados" onclick="handleCancAdd()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-backspace" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M6.603 2h7.08a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7.08a1 1 0 0 1-.76-.35L1 8l4.844-5.65A1 1 0 0 1 6.603 2zm7.08-1a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-7.08a2 2 0 0 1-1.519-.698L.241 8.65a1 1 0 0 1 0-1.302L5.084 1.7A2 2 0 0 1 6.603 1h7.08zM5.829 5.146a.5.5 0 0 0 0 .708L7.976 8l-2.147 2.146a.5.5 0 0 0 .707.708l2.147-2.147 2.146 2.147a.5.5 0 0 0 .707-.708L9.39 8l2.146-2.146a.5.5 0 0 0-.707-.708L8.683 7.293 6.536 5.146a.5.5 0 0 0-.707 0z"/>
-              </svg>
-            </button>
-          </td>
-          <td>
-            <button id="btn_save" class="btn btn-default"
-          type="submit" title="Gravar">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
-                <path fill-rule="evenodd" d="M8 2.5A5.5 5.5 0 1 0 13.5 8a.5.5 0 0 1 1 0 6.5 6.5 0 1 1-3.25-5.63.5.5 0 1 1-.5.865A5.472 5.472 0 0 0 8 2.5z"/>
-              </svg>
-            </button>
-          </td>
-          
+      $("#form-add-pipeline").append(
+        `<tr id="row-add-pipeline">
           <td><input id="inpt_cliente" class="form-add input-md" type="text" name="cliente"></td>
-          <td><input id="inpt_projeto" class="form-add input-lg" type="text" name="projeto"></td>
+          <td><input class="form-add input-lg" type="text" name="projeto"></td>
           <td><input id="inpt_val" class="form-add input-sm" type="text" name="valor_m3" onkeyup="simulaReceitas()"></td>
           <td><input id="inpt_vol" class="form-add input-sm" type="text" name="volume_m3" onkeyup="simulaReceitas()"></td>
-          <td><input id="dt_abertura" class="form-add input-lg" type="date" name="dt_abertura"></td>
-          <td><input id="dt_inicio" class="form-add input-lg" type="date" name="dt_inicio_op"></td>
+          <td><input class="form-add input-lg" type="date" name="dt_abertura"></td>
+          <td><input class="form-add input-lg" type="date" name="dt_inicio_op"></td>
           <td><input id="inpt_prz" class="form-add input-sm" type="text" name="prazo_contrato" onkeyup="simulaReceitas()"></td>
           <td>
             <select id="inpt_prob" class="form-add input-md" name="probabilidade" onchange="simulaReceitas()">
@@ -247,7 +216,7 @@ function loadFormAdd() {
             </select>
           </td>
           <td>
-            <select id="inpt_id_situacao" class="form-add input-sm" name="situacao">${situacoes}</select>
+            <select class="form-add input-sm" name="situacao">${situacoes}</select>
           </td>
           <td><input class="form-add input-lg" type="date" name="dt_encerramento"></td>
           <td><input id="inpt_tempo" class="form-add input-sm" type="text" name="tempo" onkeyup="simulaReceitas()"></td>
@@ -256,10 +225,21 @@ function loadFormAdd() {
           <td><input id="inpt_impacto" class="form-add input-lg" type="text" name="impacto" disabled></td>
           <td><input id="inpt_dur" class="form-add input-sm" type="text" name="duracao" disabled></td>
           <td><input class="form-add input-sm" type="text" name="mudanca_sts" disabled></td>
-        </tr>        
-        `
+        </tr>`
       );
       $("#btn_add").remove();
+      $("#group-buttons").append(`
+        <div class="group-buttons-content" id="group-save">
+          <div class="bt-col">
+            <button id="btn_cancel" class="btn btn-primary bt-action" type="button" onclick="handleCancAdd()">
+              Cancelar
+            </button>
+          </div>
+          <div class="bt-col">
+            <button id="btn_save" class="btn btn-success  bt-action" type="button">Salvar</button>
+          </div>
+        </div>   
+      `);
     },
     error: (err) => {
       console.log(err)
@@ -267,107 +247,17 @@ function loadFormAdd() {
   });
 }
 
+$( "#inpt_cliente" ).keyup(function() {
+  alert( "Handler for .keyup() called." );
+});
+
 /*****
  * Função que cancela a inserção no pipeline 
  */
 function handleCancAdd() {
   $("#row-add-pipeline").remove();
-  $("#form-add-pipeline").prepend(`
-    <tr>
-      <td colspan="18"> <button id="btn_add" class="btn btn-default" type="button" onclick="loadFormAdd()"><span> Adicionar</span> </button> </td>        
-    </tr>  
-    
+  $("#group-save").remove();
+  $("#group-buttons").append(`
+    <button id="btn_add" class="btn btn-success bt-action" type="button" onclick="loadFormAdd()">Inserir</button> 
   `);
-}
-
-$('#form-add-pipeline').on('click', '#btn_save', function () {
-  savePipeline();
-});
-
-$('#form-add-pipeline').on('change', '#inpt_cliente', function () {
-  cliente = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#inpt_projeto', function () {
-  projeto = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#inpt_val', function () {
-  valor = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#inpt_vol', function () {
-  volume = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#dt_abertura', function () {
-  dtAbertura = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#dt_inicio', function () {
-  dtInicio = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#inpt_prz', function () {
-  prazo = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#inpt_prob', function () {
-  probab = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#inpt_id_situacao', function () {
-  idSituacao = $(this).val();
-});
-$('#form-add-pipeline').on('change', '#inpt_tempo', function () {
-  tempo = $(this).val();
-});
-
-function savePipeline() {
-  // const token = $('[name="_token"]').val();
-
-  const token = $('[name="_token"]').val();
-  const cliente = $("#inpt_cliente").val();
-  const projeto = $("#inpt_projeto").val(); 
-  const valor = $("#inpt_val").val(); 
-  const volume = $("#inpt_vol").val(); 
-  const dtAbertura = $("#dt_abertura").val(); 
-  const dtEncerramento = $("#dt_encerramento").val(); 
-  const dtInicio = $("#dt_inicio").val(); 
-  const prazo = $("#inpt_prz").val(); 
-  const probab = $("#inpt_prob").val(); 
-  const idSituacao = $("#inpt_id_situacao").val(); 
-  const tempo = $("#inpt_tempo").val(); 
-  
-  console.log(cliente);
-  console.log(projeto);
-  console.log(valor);
-  console.log(volume);
-  console.log(dtAbertura);
-  console.log(dtInicio);
-  console.log(prazo);
-  console.log(probab);
-  console.log(idSituacao);
-  console.log($('#inpt_id_situacao').val());
-
-  $.ajax({
-    headers: { 'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-    type: "POST",
-    url: "/create",
-    dataType: 'JSON',
-    data: {
-      "_token": token,
-      "cliente": cliente,
-      "projeto": projeto,
-      "valor_m3": valor,
-      "volume_m3": volume,
-      "dt_abertura": dtAbertura,
-      "dt_encerramento": dtEncerramento,
-      "dt_inicio_op": dtInicio,
-      "prazo_contrato": prazo,
-      "probabilidade": probab,
-      "id_tab_situacao": idSituacao,
-      "tempo": tempo
-
-    },
-    success: (result) => {
-      window.location.href = "/teste?op=sucess";
-    },
-    error: (err) => {
-      console.log(err);
-      window.location.href = "/teste?op=error";
-    }
-  });
 }

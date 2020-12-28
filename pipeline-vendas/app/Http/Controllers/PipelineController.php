@@ -60,7 +60,7 @@ class PipelineController extends Controller {
 
   public function showTeste(Request $request) {
 
-    $pipeline = Pipeline::where('SITUACAO', '=', '1')->get();
+    $pipeline = Pipeline::where('SITUACAO', '=', '1')->orderBy("ID_PIPELINE","DESC")->get();
     $situacoes_lst = SituacaoController::findByTipo(1);
 
     $pipeline_lst = $pipeline;
@@ -105,6 +105,8 @@ return view('pipeline')->with('pipeline', $pipeline)
   }
 
   public function create(Request $request) {
+    $op = "sucess";
+    $code = 200;
     date_default_timezone_set('America/Sao_Paulo');
 
     $pipeline = new Pipeline();
@@ -160,11 +162,15 @@ return view('pipeline')->with('pipeline', $pipeline)
       $pipeline->save();
     } catch (\Throwable $th) {
       $op = "error";
+      $code = 500;
     }
 
-    return redirect()->action(
-      'PipelineController@show', ['op' => $op]
-    );
+    return response()->json([
+      'status' => $op,
+    ], $code);
+    // return redirect()->action(
+    //   'PipelineController@show', ['op' => $op]
+    // );
   }
 
   public function delete(Request $request) {

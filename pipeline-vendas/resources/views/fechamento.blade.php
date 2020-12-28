@@ -42,7 +42,7 @@
           </div>
 
           <div class="btn-card-view">
-            <button class="btn btn-primary btn-block bt-action" id="btn-card-detalhes">Detalhes</button>
+            <button class="btn btn-primary btn-block bt-action"  id="btn-card-detalhes">Detalhes</button>
             <button class="btn btn-primary btn-block bt-action" id="btn-card-resumo">Resumo</button>
             @php                            
               $ano_referencia = $mes_atual == 1 ? $ano_atual -1 : $ano_atual;

@@ -5,14 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
-  <link href="{{URL::asset('css/styles.css')}}" rel="stylesheet">
-  @yield('css-props')
+  <link href="{{URL::asset('css/styles.css')}}" rel="stylesheet"> 
+  <link href="{{URL::asset('css/menu_v1.css')}}" rel="stylesheet">   
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"
     rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
     integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"
     rel="stylesheet">
+  @yield('css-props')
   <title>Pipeline Cattalini</title>
 </head>
 
@@ -20,10 +21,9 @@
 
   @section('sidebar')
 
-  <nav class="navbar navbar-expand-lg navbar-light bg-light"
-    style="background-color: #10244f !important; color: white !important">
+  <nav class="menu navbar navbar-expand-lg navbar-light">
 
-    <a class="navbar-brand" href="{{action('PipelineController@show')}}"><img src="{{asset('img/logo_menu.png') }}"
+    <a class="navbar-brand" href="/"><img src="{{asset('img/logo_menu.png') }}"
         id="icon_menu">Pipeline</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

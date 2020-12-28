@@ -88,7 +88,6 @@ $("#btn_add").click(function () {
 
 $("#btn_save").click(function () {
    $("#pipeline_form").submit();  
-
 });
 
 

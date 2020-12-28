@@ -10,14 +10,14 @@ class DatabaseSeeder extends Seeder {
    */
   public function run() {
 
-    // DB::table('TAB_FECHAMENTO')->insert([
-    //     'DT_FECHAMENTO' => '2020-08-01 00:00:00',
-    //     'DT_REFERENCIA' => '2020-08-01 00:00:00',
-    //     'ID_TAB_SITUACAO' => 3,
-    //     'TOT_REC_EST' => 10,
-    //     'TOT_REC_ESP' => 10,
-    //     'TOT_IMPACTO' => 10
-    // ]);
+    DB::table('TAB_FECHAMENTO')->insert([
+        'DT_FECHAMENTO' => '2020-11-01 00:00:00',
+        'DT_REFERENCIA' => '2020-11-01 00:00:00',
+        'ID_TAB_SITUACAO' => 1,
+        'TOT_REC_EST' => 10,
+        'TOT_REC_ESP' => 10,
+        'TOT_IMPACTO' => 10
+    ]);
 
     // DB::table('TAB_SITUACAO')->insert([
     //     'SITUACAO' => "Ativa"

@@ -1,0 +1,26 @@
+.menu, .menu a, .menu button, .menu div{
+  background-color #10244f !important;
+  color: white !important;
+}
+
+
+table thead {
+  background-color: orange;  
+}
+
+table {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+.planilha-dados th {
+  text-align: center;
+}
+
+.planilha-dados button {
+  width: 2% !important;
+}
+
+.btn-remover a {
+  color: black!important;
+}

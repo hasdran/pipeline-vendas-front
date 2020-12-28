@@ -6,7 +6,11 @@
 
 .text-decoration-none {
     text-decoration: none;
-    color: white;
+    /*color: white;*/
+}
+
+#pipeline-table {
+    height: 400px;
 }
 
 .table_title {
@@ -22,8 +26,7 @@ table th{
 }
 
 tbody tr:hover{
-    background-color: #e1ecf4;
-  
+    background-color: #e1ecf4;    
 }
 
 .input-sm{
@@ -61,22 +64,38 @@ tbody tr:hover{
 
 .bt-action{
     margin-top: 1em;
-    font-size: 0.6em;
+    font-size: 1em;    
+}
+
+.btn-default.bt-action-tb {
+    margin: 3px;
 }
 #group-save {
     display: flex;
 }
 
-
-.btn{
-    width: 0auto;
-    max-width: 100px;
+.group-buttons-content {
+    display: flex;
 }
-@media(max-width: 805px){
-    #group-save {
-        display: block;
+
+.group-buttons-content .bt-col{
+    display: inline;
+    width: auto;
+    margin-right: 30px;
+}
+
+.btn {
+    width: 8rem;
+}
+
+@media(max-width: 335px){
+    .group-buttons-content {
+        flex-direction: column;
+    }
+    .group-buttons-content .bt-col{
+        margin-right: 0;
     }
     .btn{
-        width: 500px;
+        width: 100%;
     }
 }
