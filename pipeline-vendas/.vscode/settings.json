@@ -1,5 +1,7 @@
 {
     "editor.tabSize": 2,
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
     "phpfmt.exclude": [
     
     ],

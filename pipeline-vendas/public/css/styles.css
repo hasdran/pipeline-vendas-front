@@ -1,23 +1,22 @@
-@font-face {
-  font-family: OptimusPrinceps;
-  src: url('/fonts/Handel Gothic Italic Italic.tff');
-}
-
-* {
-  box-sizing: border-box;
+.menu, .menu a, .menu button, .menu div{
+  background-color: #10244f ;
+  color: white ;
 }
 
 button {
   border: none;
-  outline: inherit;
 }
 
 button:focus {
-  outline: none !important;
+  outline: none;  
 }
 
 .btn-default{
   border-radius: 3px;
+}
+
+.form-add:focus {
+  outline: none;
 }
 
 ul {  
@@ -25,9 +24,8 @@ ul {
   padding: 0;
 }
 
-h5 {    
-  
-  font-size: 13pt !important;
+h5 {      
+  font-size: 14pt !important;
 }
 
 h6 {    
@@ -41,11 +39,6 @@ h6 {
   object-position: left;
 }
 
-body{
-  font-family: 'Handel Gothic Italic Italic';
-  width: 0auto;
-  background-color: #10244f !important;
-}
 .content{
   margin-left: 0 ;
   margin-right: 0 ;
@@ -70,4 +63,12 @@ nav span {
 
 .menu {
   flex-direction: row-reverse;    
+}
+
+table {
+  border-radius: 3px;
+}
+
+.thead-orange{
+  background: orange;
 }

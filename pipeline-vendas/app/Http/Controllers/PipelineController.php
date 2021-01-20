@@ -9,14 +9,38 @@ use Illuminate\Http\Request;
 
 class PipelineController extends Controller {
 
-  public function show(Request $request) {
-    if (isset($request)) {
-      $uri = $request->path();
-    } else {
-      $uri = "";
-    }
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+  public function __construct() {
+    $this->middleware('auth');
+  }
 
-    $pipeline = Pipeline::where('SITUACAO', '=', '1')->get();
+  public function show(Request $request) {
+    $opt_declinadas = (object) array(
+      "tot_rec_est" => 0,
+      "tot_rec_esp" => 0,
+      "tot_impacto" => 0,
+    );
+    $opt_fechadas = (object) array(
+      "tot_rec_est" => 0,
+      "tot_rec_esp" => 0,
+      "tot_impacto" => 0,
+    );
+    $opt_mudancas = (object) array(
+      "tot_rec_est" => 0,
+      "tot_rec_esp" => 0,
+      "tot_impacto" => 0,
+    );
+    $opt_novas = (object) array(
+      "tot_rec_est" => 0,
+      "tot_rec_esp" => 0,
+      "tot_impacto" => 0,
+    );
+
+    $pipeline = Pipeline::where('SITUACAO', '=', '1')->orderBy("ID_PIPELINE", "DESC")->get();
     $situacao_pipeline = 1;
     $situacoes_lst = SituacaoController::findByTipo($situacao_pipeline);
 
@@ -40,73 +64,39 @@ class PipelineController extends Controller {
         $value->DT_ENCERR = str_replace(" 00:00:00.000", "", $value->DT_ENCERR);
         $value->DT_ENCERR = date("d-m-Y", strtotime($value->DT_ENCERR));
       }
-    }
-    // echo $pipeline;
-    if ($uri == 'create') {
-      return view('pipeline')->with('pipeline', $pipeline)
-        ->with('pipeline_lst', $pipeline_lst)
-        ->with('situacoes_lst', $situacoes_lst)
-        ->with('op', $uri);
-    }if ($uri == 'update') {
-      return view('pipeline')->with('pipeline', $pipeline)
-        ->with('pipeline_lst', $pipeline_lst)
-        ->with('situacoes_lst', $situacoes_lst)
-        ->with('op', $uri);
-    } else {
-      return view('pipeline')->with('pipeline', $pipeline)
-        ->with('pipeline_lst', $pipeline_lst);
-    }
-  }
 
-  public function showTeste(Request $request) {
-
-    $pipeline = Pipeline::where('SITUACAO', '=', '1')->orderBy("ID_PIPELINE","DESC")->get();
-    $situacoes_lst = SituacaoController::findByTipo(1);
-
-    $pipeline_lst = $pipeline;
-
-    foreach ($pipeline as $result => $value) {
-      $situacao = SituacaoController::find($value->ID_TAB_SITUACAO);
-      $value->ID_TAB_SITUACAO = $situacao;
-
-      $value->REC_ESTIMADA = number_format($value->REC_ESTIMADA, 2, ".", '');
-      $value->REC_ESPERADA = number_format($value->REC_ESPERADA, 2, ".", '');
-      $value->IMPACTO = number_format($value->IMPACTO, 2, ".", '');
-
-      $value->DT_INICIO = str_replace(" 00:00:00.000", "", $value->DT_INICIO);
-      $value->DT_INICIO = date("d-m-Y", strtotime($value->DT_INICIO));
-
-      $value->DT_ABERTURA = str_replace(" 00:00:00.000", "", $value->DT_ABERTURA);
-      $value->DT_ABERTURA = date("d-m-Y", strtotime($value->DT_ABERTURA));
-
-      if (isset($value->DT_ENCERR)) {
-        $value->DT_ENCERR = str_replace(" 00:00:00.000", "", $value->DT_ENCERR);
-        $value->DT_ENCERR = date("d-m-Y", strtotime($value->DT_ENCERR));
+      if ($value->MUDANCA_STS == "Declinada") {
+        $opt_declinadas->tot_rec_est += $value->REC_ESTIMADA;
+        $opt_declinadas->tot_rec_esp += $value->REC_ESPERADA;
+        $opt_declinadas->tot_impacto += $value->IMPACTO;
+        
       }
+      if ($value->MUDANCA_STS == "Fechada") {
+        $opt_fechadas->tot_rec_est += $value->REC_ESTIMADA;
+        $opt_fechadas->tot_rec_esp += $value->REC_ESPERADA;
+        $opt_fechadas->tot_impacto += $value->IMPACTO;
+      }
+      if ($value->MUDANCA_STS == "Mudança") {
+        $opt_mudancas->tot_rec_est += $value->REC_ESTIMADA;
+        $opt_mudancas->tot_rec_esp += $value->REC_ESPERADA;
+        $opt_mudancas->tot_impacto += $value->IMPACTO;
+      }
+      if ($value->MUDANCA_STS == "Nova") {
+    
+        $opt_novas->tot_rec_est += $value->REC_ESTIMADA;
+        $opt_novas->tot_rec_esp += $value->REC_ESPERADA;
+        $opt_novas->tot_impacto += $value->IMPACTO;
+      }
+
     }
 
-    $result = array("pipeline" => $pipeline_lst);
-/*    if ($uri == 'create') {
-return view('pipeline')->with('pipeline', $pipeline)
-->with('pipeline_lst', $pipeline_lst)
-->with('situacoes_lst', $situacoes_lst)
-->with('op', $uri);
-}if ($uri == 'update') {
-return view('pipeline')->with('pipeline', $pipeline)
-->with('pipeline_lst', $pipeline_lst)
-->with('situacoes_lst', $situacoes_lst)
-->with('op', $uri);
-} else {
-
-}*/
-    return view('teste')->with('pipeline', $pipeline)
+    return view('pipeline')->with('pipeline', $pipeline)
       ->with('pipeline_lst', $pipeline_lst);
-
   }
 
   public function create(Request $request) {
     $op = "sucess";
-    $code = 200;
+    $status_code = 200;
     date_default_timezone_set('America/Sao_Paulo');
 
     $pipeline = new Pipeline();
@@ -162,20 +152,17 @@ return view('pipeline')->with('pipeline', $pipeline)
       $pipeline->save();
     } catch (\Throwable $th) {
       $op = "error";
-      $code = 500;
+      $status_code = 401;
     }
 
     return response()->json([
-      'status' => $op,
-    ], $code);
-    // return redirect()->action(
-    //   'PipelineController@show', ['op' => $op]
-    // );
+      'msg' => $op,
+    ], $status_code);
   }
 
   public function delete(Request $request) {
     $op = "sucess";
-    $code = 200;
+    $status_code = 200;
     try {
       $pipeline = Pipeline::where('ID_PIPELINE', '=', $request->id)
         ->update(
@@ -186,11 +173,11 @@ return view('pipeline')->with('pipeline', $pipeline)
 
     } catch (\Throwable $th) {
       $op = "error";
-      $code = 200;
+      $status_code = 200;
     }
     return response()->json([
-      'status' => $op,
-    ], $code);
+      'msg' => $op,
+    ], $status_code);
   }
 
   public function update(Request $request) {
@@ -233,7 +220,7 @@ return view('pipeline')->with('pipeline', $pipeline)
     }
 
     $op = "sucess";
-    $code = 200;
+    $status_code = 200;
 
     if ($request_sts == true) {
       try {
@@ -253,26 +240,20 @@ return view('pipeline')->with('pipeline', $pipeline)
             'DURACAO' => $pipeline->DURACAO,
           ));
         $op = "sucess";
-        $code = 200;
+        $status_code = 200;
       } catch (\Throwable $th) {
         $op = $th;
-        $code = 500;
+        $status_code = 401;
       }
     } else {
       $op = "error";
-      $code = 500;
+      $status_code = 401;
     }
 
     return response()->json([
-      'status' => $op,
-    ], $code);
+      'msg' => $op,
+    ], $status_code);
   }
-
-  // public function findBySituacao(Request $request) {
-  //   $pipeline = Pipeline::all();
-
-  //   return "sdsdfsdf";
-  // }
 
   public static function findByDate($mes, $ano) {
     $pipeline = Pipeline::whereMonth('DT_ABERTURA', '=', $mes)
@@ -351,5 +332,67 @@ return view('pipeline')->with('pipeline', $pipeline)
     }
 
     return $tot_impac;
+  }
+
+  public function getResumoReceitas(Request $request) {
+    $op;
+    $status_code = 200;
+
+    try {
+      $op = Pipeline::whereYear('DT_ABERTURA', '=', 2020)
+        ->where('SITUACAO', '=', '1')
+        ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
+        ->get();
+    } catch (\Throwable $th) {
+      $op = "error";
+      $status_code = 401;
+    }
+
+    return response()->json([
+      'msg' => $op[0],
+    ], $status_code);
+  }
+
+  public function getResumoReceitasNovas(Request $request) {
+    $op;
+    $status_code = 200;
+
+    if ($request->periodo == "atual") {
+      try {
+        $op = Pipeline::whereMonth('DT_ABERTURA', '=', 1)
+          ->whereYear('DT_ABERTURA', '=', 2021)
+          ->where('SITUACAO', '=', '1')
+          ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
+          ->get();
+      } catch (\Throwable $th) {
+        $op = "error";
+        $status_code = 401;
+      }
+    }else if ($request->periodo == "anterior"){
+      try {
+        $op = Pipeline::whereMonth('DT_ABERTURA', '=', 12)
+          ->whereYear('DT_ABERTURA', '=', 2020)
+          ->where('SITUACAO', '=', '1')
+          ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
+          ->get();
+      } catch (\Throwable $th) {
+        $op = "error";
+        $status_code = 401;
+      }
+    }else if ($request->periodo == "anual"){
+      try {
+        $op = Pipeline::whereYear('DT_ABERTURA', '=', 2020)
+          ->where('SITUACAO', '=', '1')
+          ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
+          ->get();
+      } catch (\Throwable $th) {
+        $op = "error";
+        $status_code = 401;
+      }
+    }
+
+    return response()->json([
+      'msg' => $op[0],
+    ], $status_code);
   }
 }

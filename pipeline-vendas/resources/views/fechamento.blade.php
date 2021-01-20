@@ -1,4 +1,4 @@
-@extends('index')
+@extends('layouts.index')
 
 @section('css-props')
   <link rel="stylesheet" href="{{URL::asset('css/fechamento.css')}}" />

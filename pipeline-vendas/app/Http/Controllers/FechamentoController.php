@@ -84,7 +84,7 @@ class FechamentoController extends Controller {
   public function cancelFechamento(Request $request) {
     $situacao = SituacaoController::findBySituacao("Cancelado", 0);
     $status_op = "sucess";
-    $code = "200";
+    $status_code = "200";
 
     try {
       Fechamento::where("ID_TAB_FECHAMENTO", "=", $request->id_fechamento)
@@ -95,12 +95,12 @@ class FechamentoController extends Controller {
         );
     } catch (\Throwable $th) {
       $status_op = "error";
-      $code = "500";
+      $status_code = "401";
     }
-  
+
     return response()->json([
-      'status' => $status_op,
-    ], $code);
+      'msg' => $status_op,
+    ], $status_code);
   }
   /***
    *
@@ -221,10 +221,10 @@ class FechamentoController extends Controller {
     }
 
     $status_op = "sucess";
-    $code = "200";
+    $status_code = "200";
     return response()->json([
-      'status' => $status_op,
-    ], $code);
+      'msg' => $status_op,
+    ], $status_code);
   }
   /***
    *
@@ -258,10 +258,10 @@ class FechamentoController extends Controller {
       }
     }
 
-    $code = "200";
+    $status_code = "200";
     return response()->json([
       'fechamento' => $fechamento[0],
-    ], $code);
+    ], $status_code);
   }
   /***
    *
@@ -288,9 +288,9 @@ class FechamentoController extends Controller {
       }
     }
 
-    $code = "200";
+    $status_code = "200";
     return response()->json([
       'fechamento' => $fechamento[0],
-    ], $code);
+    ], $status_code);
   }
 }

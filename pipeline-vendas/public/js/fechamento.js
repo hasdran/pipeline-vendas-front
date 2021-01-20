@@ -43,13 +43,13 @@ $('#btn-card-resumo').click(function () {
 });
 
 $("#btn-alert-confirmar").click(() => {
-    $("#btn-alert-confirmar").prop("disabled",true);
+    $("#btn-alert-confirmar").prop("disabled", true);
     confirmaFechamento(idFechamentoCard);
-}); 
+});
 
 for (let lin = 1; lin < getQtdeLinhasTab(); lin++) {
     const idFechamento = $(`#id-fechamento-hist-${lin}`).val();
-    $(`#btn-tb-resumo-${lin}`).click(() => {        
+    $(`#btn-tb-resumo-${lin}`).click(() => {
         const url = "/fechamento/resumo-fato";
         getResumoFechamento(idFechamento, url);
     });
@@ -65,7 +65,7 @@ for (let lin = 1; lin < getQtdeLinhasTab(); lin++) {
 
     $(`#btn-tb-confirmar-${lin}`).click(() => {
         confirmaFechamento(idFechamento);
-    }); 
+    });
 }
 
 /*****
@@ -246,7 +246,7 @@ function getDetalhesFato(dtFechamento) {
 
 function getResumoFechamento(idFechamento, url) {
     const token = $('[name="_token"]').val();
-    
+
     $.ajax({
         headers: { 'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         type: "GET",
@@ -257,24 +257,35 @@ function getResumoFechamento(idFechamento, url) {
             "id": idFechamento,
         },
         success: (result) => {
-           
+
             $("#tab-hist-fechamento").empty();
 
-                    $("#tab-hist-fechamento").prepend(`
+            $("#tab-hist-fechamento").prepend(`
                         <div class="table table-responsive">
                             <table id="pipeline-table">
                                 <thead class="thead-dark">
                                     <tr>
-                                    <th scope="col">Data Fechamento</th>
-                                    <th scope="col">Referência</th>
-                                    <th scope="col">Período</th>
-                                    <th scope="col">Receita Estimada</th>
-                                    <th scope="col">Receita Esperada</th>
-                                    <th scope="col">Impacto</th>
+                                        <th scope="col"></th>
+                                        <th scope="col">Data Fechamento</th>
+                                        <th scope="col">Referência</th>
+             
+                                        <th scope="col">Receita Estimada</th>
+                                        <th scope="col">Receita Esperada</th>
+                                        <th scope="col">Impacto</th>
                                     </tr>
                                 </thead>
                                 <tbody id="body-fechamento">
                                     <tr id="tr-fechamento">
+                                        <th scope="row">Declinada</th>
+                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
+                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
+                                  
+                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
+                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
+                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
+                                    <tr/>  
+                                    <tr id="tr-fechamento">
+                                        <th scope="row">Fechada</th>
                                         <td>${result["fechamento"].DT_FECHAMENTO}</td>
                                         <td>${result["fechamento"].DT_REFERENCIA}</td>
                                         <td>${result["fechamento"].PERIODO}</td>
@@ -282,13 +293,40 @@ function getResumoFechamento(idFechamento, url) {
                                         <td>R$${result["fechamento"].TOT_REC_ESP}</td>
                                         <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
                                     <tr/>  
+                                    <tr id="tr-fechamento">
+                                        <th scope="row">Mudança</th>
+                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
+                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
+                                        <td>${result["fechamento"].PERIODO}</td>
+                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
+                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
+                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
+                                    <tr/>
+                                    <tr id="tr-fechamento">
+                                        <th scope="row">Nova</th>
+                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
+                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
+                                        <td>${result["fechamento"].PERIODO}</td>
+                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
+                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
+                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
+                                    <tr/>   
+                                    <tr id="tr-fechamento">
+                                        <th scope="row">Nova</th>
+                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
+                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
+                                        <td>${result["fechamento"].PERIODO}</td>
+                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
+                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
+                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
+                                    <tr/>                                                                                                                                                    
                                 </tbody>
                             </table>
                         </div>
-                    `)    
+                    `)
 
-                    window.location.href = '#body-fechamento';         
- 
+            window.location.href = '#body-fechamento';
+
         },
         error: (err) => {
 
@@ -342,3 +380,11 @@ function confirmaFechamento(idFechamento) {
     });
 }
 
+$(() => {
+    $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $("#form-add-pipeline tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
