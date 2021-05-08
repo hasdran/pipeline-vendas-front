@@ -5,17 +5,40 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\SituacaoController;
 use App\Pipeline;
 use App\PipelineFato;
+use App\Resumo;
+use App\Services\PipelineService;
 use Illuminate\Http\Request;
 
 class PipelineController extends Controller {
 
+  protected $pipelineService;
   /**
    * Create a new controller instance.
    *
    * @return void
    */
-  public function __construct() {
+  public function __construct(PipelineService $pipelineService) {
+
+    $this->pipelineService = $pipelineService;
     $this->middleware('auth');
+  }
+
+  public function mostrar() {
+
+    return $this->pipelineService->mostrarTodos();
+  }
+
+  public function criar(Request $request) {
+    return $this->pipelineService->salvar($request);
+
+  }
+
+  public function alterar(Request $request) {
+    return $this->pipelineService->alterar($request);
+  }
+
+  public function remover(Request $request) {
+    return $this->pipelineService->remover($request);
   }
 
   public function show(Request $request) {
@@ -69,7 +92,7 @@ class PipelineController extends Controller {
         $opt_declinadas->tot_rec_est += $value->REC_ESTIMADA;
         $opt_declinadas->tot_rec_esp += $value->REC_ESPERADA;
         $opt_declinadas->tot_impacto += $value->IMPACTO;
-        
+
       }
       if ($value->MUDANCA_STS == "Fechada") {
         $opt_fechadas->tot_rec_est += $value->REC_ESTIMADA;
@@ -82,7 +105,7 @@ class PipelineController extends Controller {
         $opt_mudancas->tot_impacto += $value->IMPACTO;
       }
       if ($value->MUDANCA_STS == "Nova") {
-    
+
         $opt_novas->tot_rec_est += $value->REC_ESTIMADA;
         $opt_novas->tot_rec_esp += $value->REC_ESPERADA;
         $opt_novas->tot_impacto += $value->IMPACTO;
@@ -315,84 +338,41 @@ class PipelineController extends Controller {
     return $status_op;
   }
 
-  public static function somaTotalReceitas($fechamento, $op) {
-    if ($op == 0) {
-      $tot_impac = PipelineFato::where("ID_TAB_FECHAMENTO", "=", $fechamento->ID_TAB_FECHAMENTO)
-        ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
-        ->get();
-    } else {
-      $dt_fechamento = str_replace(" 00:00:00.000", "", $fechamento->DT_REFERENCIA);
-      list($ano, $mes, $dia) = explode("-", $dt_fechamento);
+  public static function buscaTotalReceitaAtual() {
 
-      $tot_impac = Pipeline::whereMonth("DT_ABERTURA", "=", $mes)
-        ->whereYear('DT_ABERTURA', '=', $ano)
-        ->where('SITUACAO', '=', '1')
-        ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
-        ->get();
+    $pipeline_lst = Pipeline::selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO, MUDANCA_STS')
+      ->where("SITUACAO", 1)
+      ->groupBy("MUDANCA_STS")
+      ->get();
+
+    $mudanca_sts = ["Ativa", "Antiga", "Declinada", "Nova"];
+    $resumo_receitas = [];
+
+    foreach ($mudanca_sts as $value) {
+      $resumo = self::filtraReceitas($pipeline_lst, $value);
+      $resumo_receitas[strtoupper($value)] = $resumo;
     }
 
-    return $tot_impac;
+    return $resumo_receitas;
   }
 
-  public function getResumoReceitas(Request $request) {
-    $op;
-    $status_code = 200;
+  public static function filtraReceitas($receitas, $status) {
+    $resumo = new Resumo($status);
 
-    try {
-      $op = Pipeline::whereYear('DT_ABERTURA', '=', 2020)
-        ->where('SITUACAO', '=', '1')
-        ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
-        ->get();
-    } catch (\Throwable $th) {
-      $op = "error";
-      $status_code = 401;
-    }
+    foreach ($receitas as $indice => $result) {
 
-    return response()->json([
-      'msg' => $op[0],
-    ], $status_code);
-  }
-
-  public function getResumoReceitasNovas(Request $request) {
-    $op;
-    $status_code = 200;
-
-    if ($request->periodo == "atual") {
-      try {
-        $op = Pipeline::whereMonth('DT_ABERTURA', '=', 1)
-          ->whereYear('DT_ABERTURA', '=', 2021)
-          ->where('SITUACAO', '=', '1')
-          ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
-          ->get();
-      } catch (\Throwable $th) {
-        $op = "error";
-        $status_code = 401;
-      }
-    }else if ($request->periodo == "anterior"){
-      try {
-        $op = Pipeline::whereMonth('DT_ABERTURA', '=', 12)
-          ->whereYear('DT_ABERTURA', '=', 2020)
-          ->where('SITUACAO', '=', '1')
-          ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
-          ->get();
-      } catch (\Throwable $th) {
-        $op = "error";
-        $status_code = 401;
-      }
-    }else if ($request->periodo == "anual"){
-      try {
-        $op = Pipeline::whereYear('DT_ABERTURA', '=', 2020)
-          ->where('SITUACAO', '=', '1')
-          ->selectRaw('sum(REC_ESTIMADA) as REC_ESTIMADA, sum(REC_ESPERADA) as REC_ESPERADA, sum(IMPACTO) as IMPACTO')
-          ->get();
-      } catch (\Throwable $th) {
-        $op = "error";
-        $status_code = 401;
+      if ($receitas[$indice]->MUDANCA_STS == $status) {
+        $resumo->setReceitaEst($receitas[$indice]->REC_ESTIMADA);
+        $resumo->setReceitaEsp($receitas[$indice]->REC_ESPERADA);
+        $resumo->setImpacto($receitas[$indice]->IMPACTO);
+        $resumo->setSituacao($status);
+        return $resumo;
       }
     }
-
-    return response()->json([
-      'msg' => $op[0],
-    ], $status_code);
+    $resumo->setReceitaEst(0);
+    $resumo->setReceitaEsp(0);
+    $resumo->setImpacto(0);
+    $resumo->setSituacao($status);
+    return $resumo;
   }
 }

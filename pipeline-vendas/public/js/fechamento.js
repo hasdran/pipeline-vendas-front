@@ -168,6 +168,7 @@ function getDetalhesFechamento(dtFechamento) {
 function getDetalhesFato(dtFechamento) {
     const token = $('[name="_token"]').val();
     const dt_fechamento = dtFechamento;
+    console.warn("asdasdasdasd")
     $.ajax({
         headers: { 'CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
         type: "POST",
@@ -266,60 +267,48 @@ function getResumoFechamento(idFechamento, url) {
                                 <thead class="thead-dark">
                                     <tr>
                                         <th scope="col"></th>
-                                        <th scope="col">Data Fechamento</th>
-                                        <th scope="col">Referência</th>
-             
                                         <th scope="col">Receita Estimada</th>
                                         <th scope="col">Receita Esperada</th>
                                         <th scope="col">Impacto</th>
                                     </tr>
                                 </thead>
                                 <tbody id="body-fechamento">
-                                    <tr id="tr-fechamento">
-                                        <th scope="row">Declinada</th>
-                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
-                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
-                                  
-                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
-                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
+                                    <tr id="tr-fechamento" style="color: red">
+                                        <th scope="row">${result["dt_referencia_anterior"]}</th>                                
+                                        <td>R$${result["rec_est_anterior"]}</td>
+                                        <td>R$${result["rec_esp_anterior"]}</td>
+                                        <td>R$${result["rec_imp_anterior"]}</td>  
                                     <tr/>  
                                     <tr id="tr-fechamento">
-                                        <th scope="row">Fechada</th>
-                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
-                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
-                                        <td>${result["fechamento"].PERIODO}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
-                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
+                                        <th scope="row">Declinada</th>                               
+                                        <td>R$${result["rec_est_declinada"]}</td>
+                                        <td>R$${result["rec_esp_declinada"]}</td>
+                                        <td>R$${result["rec_imp_declinada"]}</td>  
+                                    <tr/>  
+                                    <tr id="tr-fechamento">
+                                        <th scope="row">Fechada</th>                                 
+                                        <td>R$${result["rec_est_fechada"]}</td>
+                                        <td>R$${result["rec_esp_fechada"]}</td>
+                                        <td>R$${result["rec_imp_fechada"]}</td> 
                                     <tr/>  
                                     <tr id="tr-fechamento">
                                         <th scope="row">Mudança</th>
-                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
-                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
-                                        <td>${result["fechamento"].PERIODO}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
-                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
+                                        <td>R$${result["rec_est_ativa"]}</td>
+                                        <td>R$${result["rec_esp_ativa"]}</td>
+                                        <td>R$${result["rec_imp_ativa"]}</td> 
                                     <tr/>
                                     <tr id="tr-fechamento">
-                                        <th scope="row">Nova</th>
-                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
-                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
-                                        <td>${result["fechamento"].PERIODO}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
-                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
-                                    <tr/>   
-                                    <tr id="tr-fechamento">
-                                        <th scope="row">Nova</th>
-                                        <td>${result["fechamento"].DT_FECHAMENTO}</td>
-                                        <td>${result["fechamento"].DT_REFERENCIA}</td>
-                                        <td>${result["fechamento"].PERIODO}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_EST}</td>
-                                        <td>R$${result["fechamento"].TOT_REC_ESP}</td>
-                                        <td>R$${result["fechamento"].TOT_IMPACTO}</td> 
-                                    <tr/>                                                                                                                                                    
+                                        <th scope="row">Nova</th>                                   
+                                        <td>R$${result["rec_est_nova"]}</td>
+                                        <td>R$${result["rec_esp_nova"]}</td>
+                                        <td>R$${result["rec_imp_nova"]}</td> 
+                                    <tr/>
+                                    <tr id="tr-fechamento" style="color: green">
+                                        <th scope="row">${result["dt_referencia_atual"]}</th>                                     
+                                        <td>R$${result["rec_est_atual"]}</td>
+                                        <td>R$${result["rec_esp_atual"]}</td>
+                                        <td>R$${result["rec_imp_atual"]}</td> 
+                                    <tr/>                                                                                                                                                                                           
                                 </tbody>
                             </table>
                         </div>

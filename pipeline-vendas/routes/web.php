@@ -1,12 +1,24 @@
 <?php
 
 //teste
+
+Route::get('/mostrar', 'PipelineController@mostrar');
+Route::post('/', 'PipelineController@criar');
+Route::put('/{id}', 'PipelineController@alterar');
+Route::patch('/{id}', 'PipelineController@remover');
+
+Route::post('/fechamento', 'FechamentoController@criar');
+
+Auth::routes();
+
+
 Route::get('/teste', 'PipelineController@showTeste');
 
 // Route::post('/insert', 'SituacaoController@getSituacoesPipeline');
 //teste
-Auth::routes();
-Route::get('/', 'PipelineController@show');
+
+Route::get('/confirma-teste', 'FechamentoController@confirmaTeste');
+//Route::get('/', 'PipelineController@show');
 Route::get('/find', 'PipelineController@findBySituacao');
 Route::post('/create', 'PipelineController@create');
 Route::post('/update', 'PipelineController@update');
@@ -24,3 +36,6 @@ Route::post('/fechamento/find', 'FechamentoController@find');
 Route::post('/fechamento/detalhes', 'FechamentoController@getDetalhes');
 Route::post('/fechamento/detalhes-fato', 'FechamentoController@getDetalhesFato');
 Route::post('/fechamento/confirmar-fechamento', 'FechamentoController@confirmarFechamento');
+
+//ROTAS DE TESTE
+

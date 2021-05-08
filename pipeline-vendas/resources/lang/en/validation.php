@@ -130,10 +130,39 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'CLIENTE' => [
+            'required' => 'O campo CLIENTE é obrigatório.',
+        ],
+        'PROJETO' => [
+            'required' => 'O campo PROJETO é obrigatório.',
+        ],
+        'VALOR' => [
+            'required' => 'O campo VALOR é obrigatório.',
+        ],
+        'VOLUME' => [
+            'required' => 'O campo VOLUME é obrigatório.',
+        ],
+        'DT_INICIO' => [
+            'required' => 'O campo DT_INICIO é obrigatório.',
+        ],
+        'PRAZO' => [
+            'required' => 'O campo PRAZO é obrigatório.',
+        ],
+        'PROBAB' => [
+            'required' => 'O campo PROBAB é obrigatório.',
+        ],
+        'ID_TAB_SITUACAO' => [
+            'required' => 'O campo ID_TAB_SITUACAO é obrigatório.',
+        ],
+        'DTOPEINC' => [
+            'required' => 'O campo DTOPEINC é obrigatório.',
         ],
     ],
+    // 'custom' => [
+    //     'attribute-name' => [
+    //         'rule-name' => 'custom-message',
+    //     ],
+    // ],
 
     /*
     |--------------------------------------------------------------------------
